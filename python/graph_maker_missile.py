@@ -93,13 +93,6 @@ def parse_arguments():
 
     return vars(parser.parse_args())
 
-def pressure_at_altitude(P0, T0, altitude):
-    g = 9.81  # gravitational acceleration (m/s^2)
-    L = 0.0065  # temperature lapse rate (K/m)
-    R = 445.5  # specific gas constant (J/(kg*K)) for air
-    T0_K = T0 + 273.15  # Convert T0 to Kelvin
-    T = T0_K - L * altitude  # temperature at altitude (K)
-    return P0 * 100 * (T / T0_K) ** (g / (L * R))  # Convert hPa to Pa
 
 def get_rho(altitude):
     # Given data
@@ -116,10 +109,8 @@ def get_rho(altitude):
 
 def compute_dependent_variables(args, start_speed, launch_altitude, target_speed, initial_target_distance, target_altitude):
     start_speed_ias = tas_to_ias(start_speed, launch_altitude)
-    target_speed_ias = tas_to_ias(target_speed, target_altitude)
 
     # Constants
-    R = 445.5  # specific gas constant (J/(kg*K)) for air
     g = 9.81  # gravitational acceleration (m/s^2)
     time_interval=0.01
     # Time array
@@ -130,7 +121,6 @@ def compute_dependent_variables(args, start_speed, launch_altitude, target_speed
     true_mass = np.zeros(n)
     true_thrust = np.zeros(n)
     speeds = np.zeros(n)
-    speeds_turn = np.zeros(n)
     horizontal_speeds = np.zeros(n)
     vertical_speeds = np.zeros(n)
     drags = np.zeros(n)
@@ -148,7 +138,6 @@ def compute_dependent_variables(args, start_speed, launch_altitude, target_speed
 
     # Set initial values
     speeds[0] = start_speed_ias * (1000 / 3600)  # Convert km/h to m/s
-    speeds_turn[0] = speeds[0]
     horizontal_speeds[0] = start_speed / 3.6
     vertical_speeds[0] = 0  # Initial vertical speed
     target_distances[0] = initial_target_distance * 1000  # Convert km to m
@@ -284,14 +273,6 @@ def compute_dependent_variables(args, start_speed, launch_altitude, target_speed
         else:
             Cl = 0
         
-        # drag_turn = 0.5 * rho * speeds_turn[i-1] ** 2 * args["cxk"] * area  # Drag computation
-        # acceleration_turn = (thrust_ias - drag_turn) / true_mass[i]  # Thrust acceleration
-        # speeds_turn[i] = (speeds_turn[i-1] + acceleration_turn * time_interval) * np.cos(turn_rates[i-1] * time_interval)
-        # tas_speed_turn = ias_to_tas(speeds_turn[i], launch_altitude)
-        # turn_rate = ((Cl * args["wing_area"] * 0.5 * rho * (speeds_turn[i]**2) * D)/true_mass[i] + (tvc*D*true_thrust[i])/(true_mass[i])) * time_interval
-        # radius_check = tas_speed_turn/turn_rate
-        # load_check = (tas_speed_turn**2)/(radius_check*g)
-
         turn_rate = ((Cl * args["wing_area"] * 0.5 * rho * (speeds[i]**2) * D)/true_mass[i] + (tvc*D*true_thrust[i])/(true_mass[i])) * time_interval
         radius_check = tas_speed[i]/turn_rate
         load_check = (tas_speed[i]**2)/(radius_check*g)
