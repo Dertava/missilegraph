@@ -1,4 +1,5 @@
 Just download the .exe
+First time opening may take a while, it will download the initial data
 
 Things that work (still take it with a grain of salt): 
 Range in straight line
