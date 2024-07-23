@@ -198,7 +198,7 @@ def make_categories():
     categories = {
         "General": ["file_path", "bullet_name", "caliber", "cxk", "relative drag", "Drag/weight"],
         "Mass": ["mass", "mass_end_booster", "mass_end_sustainer"],
-        "Engine":["Total Impulse","Total dV",],
+        "Engine":["Total Impulse","Total dV", "Engine Mass", "Total Burn Time"],
         "Booster":["time_fire_booster", "force_booster", "Booster Mass", "booster ISP", "Booster dV",],
         "Sustainer":["time_fire_sustainer", "force_sustainer", "Sustainer Mass", "sustainer ISP","Sustainer dV"],
         "Performance": ["time_life", "end_speed", "max_distance"],

@@ -100,7 +100,7 @@ def extract_info(file_path, version):
             "mass_end_sustainer": mass_end_sustainer if mass_end_sustainer !=0 else mass_end_booster,
             "time_fire_booster": time_fire_booster,
             "time_fire_sustainer": time_fire_sustainer,
-            "total_time_fire": round(time_fire_booster + time_fire_sustainer, 1),
+            "Total Burn Time": round(time_fire_booster + time_fire_sustainer, 1),
             "Booster dV": round(deltav_booster),
             "Sustainer dV": round(deltav_sustainer) if deltav_sustainer else 0,
             "Total dV": round(total_deltav),
