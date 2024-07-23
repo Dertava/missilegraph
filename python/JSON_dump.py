@@ -6,20 +6,6 @@ import json
 import shutil
 from find_name import find_weapon_name
 
-# def find_name(file_name):
-#     try:
-#         with open(units_path, 'r', encoding='utf-8', errors='ignore') as units:
-#             data = units.read()
-#             name_match = re.search(fr'{file_name}/short";"(.*?)"', data)
-#             if name_match:
-#                 name = name_match.group(1)
-#             else:
-#                 name = file_name
-#             return name
-#     except Exception as e:
-#         print(f"Error reading units_weaponry.csv: {e}")
-#         return file_name
-
 def get_first_value(value):
     if isinstance(value, list):
         return value[0] if value else 0
@@ -187,12 +173,9 @@ def list_blk_files(directory, compiled_dir, version):
 
     return blk_files_info
 
-# Example usage
 directory = 'rocketguns_json/aces.vromfs.bin_u/gamedata/weapons/rocketguns'
 units_path = 'rocketguns_json/lang/lang.vromfs.bin_u/lang/units_weaponry.csv'
 compiled_dir = 'compiled_info_directory'
 version_file_path = 'rocketguns_json/aces.vromfs.bin_u/version'
 version = load_version(version_file_path)
 blk_files_info = list_blk_files(directory, compiled_dir, version)
-
-#print(blk_files_info)

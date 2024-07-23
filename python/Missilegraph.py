@@ -19,16 +19,17 @@ def restart():
         print(f"Error restarting the script: {e}")
     finally:
         sys.exit()
-   
-def update_infos():
+
+def clone_github():
     import git_clone
+    print(f"Updated from https://github.com/gszabi99/War-Thunder-Datamine\nRestarting...")
+    restart()
+
+def update_infos():
     import JSON_dump
     load_compiled_info(compiled_file_path)
     print("Restarting")
     restart()
-
-  
-    # root.destroy()
 
 if not os.path.exists('rocketguns_json') or not os.path.isdir('rocketguns_json'):
     print("Loading informations...")
@@ -228,7 +229,8 @@ def update_listbox2(*args):
         if search_term in filename.lower():
             listbox2.insert(ctk.END, filename)
 
-update_button = ctk.CTkButton(left_frame, text="Update Game Version", command=update_infos).pack(side=ctk.TOP, padx=5, pady=5)
+clone_button = ctk.CTkButton(left_frame, text="Clone https://github.com/\ngszabi99/War-Thunder-Datamine", command=clone_github).pack(side=ctk.TOP, padx=5, pady=5)
+update_button = ctk.CTkButton(left_frame, text="Update From the\nlocal directory", command=update_infos).pack(side=ctk.TOP, padx=5, pady=5)
 
 # Create a listbox to display BLK file names
 listbox_frame = ctk.CTkFrame(left_frame)
