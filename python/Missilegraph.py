@@ -7,11 +7,12 @@ import os
 import subprocess
 import json
 import sys
+import time
 
 def restart():
     python = sys.executable
     script = os.path.abspath(sys.argv[0])  # Ensure the full path to the script is used
-
+    print("Restarting...")
     # Use subprocess to restart the script
     try:
         subprocess.Popen([python, script] + sys.argv[1:])
@@ -28,19 +29,18 @@ def clone_github():
 def update_infos():
     import JSON_dump
     load_compiled_info(compiled_file_path)
-    print("Restarting")
     restart()
 
 if not os.path.exists('rocketguns_json') or not os.path.isdir('rocketguns_json'):
-    print("Cloning informations...")
+    print("Cloning github into the necessary directory...")
     import git_clone
-    print("Please restart...")
+    print("Please restart after task ended...")
+    time.sleep(3)
     exit()
 
 if not os.path.exists('compiled_info_directory') or not os.path.isdir('compiled_info_directory'):
     print("Loading informations...")
     import JSON_dump
-    print("Restarting...")
     restart()
 
 
@@ -198,7 +198,9 @@ def make_categories():
     categories = {
         "General": ["file_path", "bullet_name", "caliber", "cxk", "relative drag", "Drag/weight"],
         "Mass": ["mass", "mass_end_booster", "mass_end_sustainer"],
-        "Engine":["Total Impulse","Total dV", "time_fire_booster", "force_booster", "Booster Mass", "booster ISP", "Booster dV","time_fire_sustainer", "force_sustainer", "Sustainer Mass", "sustainer ISP","Sustainer dV"],
+        "Engine":["Total Impulse","Total dV",],
+        "Booster":["time_fire_booster", "force_booster", "Booster Mass", "booster ISP", "Booster dV",],
+        "Sustainer":["time_fire_sustainer", "force_sustainer", "Sustainer Mass", "sustainer ISP","Sustainer dV"],
         "Performance": ["time_life", "end_speed", "max_distance"],
         "Loft": ["loft_elevation", "loft_target_elevation", "loft_omega_max", "loft_angle_acceleration"],
         "Misc": ["lock_distance", "aoa", "tvc", "overload", "dist_cm_stab", "wing_area"],
@@ -408,15 +410,6 @@ def generate_graph_for_selected_file(event=None):
         categories = make_categories()
         create_ui(data1, data2, categories)
 
-# Start comparison
-# def start_comparison():
-#     global selected_file_1
-#     selected_file_1 = listbox.get(tk.ACTIVE)
-#     if selected_file_1 in blk_files_info:
-#         listbox2.pack(fill=ctk.BOTH, expand=True)
-#         listbox2.delete(0, tk.END)
-#         for filename in blk_files_info:
-#             listbox2.insert(tk.END, filename)
 
 # Function to generate the comparison graph
 def generate_graph_comparison(event=None):
@@ -549,8 +542,6 @@ open_button.pack(padx=5, pady=5)
 graph_button = ctk.CTkButton(listbox_frame, text="Generate Graph", command=generate_graph_for_selected_file)
 graph_button.pack(padx=5, pady=5)
 
-# compare_button = ctk.CTkButton(listbox_frame, text="Compare with another", command=start_comparison)
-# compare_button.pack(side=ctk.BOTTOM, padx=5, pady=5)
 
 # Create buttons for comparison frame
 open_button1 = ctk.CTkButton(listbox2_frame, text="Open in Notepad", command=open_selected_file2)
