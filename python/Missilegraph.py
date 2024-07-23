@@ -32,13 +32,15 @@ def update_infos():
     restart()
 
 if not os.path.exists('rocketguns_json') or not os.path.isdir('rocketguns_json'):
-    print("Loading informations...")
+    print("Cloning informations...")
     import git_clone
-    restart()
+    print("Please restart...")
+    exit()
 
 if not os.path.exists('compiled_info_directory') or not os.path.isdir('compiled_info_directory'):
     print("Loading informations...")
     import JSON_dump
+    print("Restarting...")
     restart()
 
 
