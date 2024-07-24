@@ -210,6 +210,7 @@ def compute_dependent_variables(args, start_speed, launch_altitude, target_speed
         desired_altitude_change = target_altitude - vertical_distances[i-1]  # Climbing or diving distance
         angle1 = np.arctan(desired_altitude_change / (intersection_time * speeds[i-1])) if target_speed != 0 else 0
         dive_check = np.arctan(desired_altitude_change/(target_distances[i-1] - horizontal_distances [i-1])) if target_speed != 0 else 0
+        desired_loft_angle = min(abs(true_acceleration[i-1]) * loft_accel * 0.005, loft_climb_angle)
         
         if distance_check > 0:
             if target_distances[i-1] - horizontal_distances[i-1] < distance_check/2:
@@ -224,7 +225,7 @@ def compute_dependent_variables(args, start_speed, launch_altitude, target_speed
             angle[i]= angle1
         elif lofting:
             if climbing:
-                angle[i] = min(loft_climb_angle, angle[i-1] + loft_omega_max * loft_accel)
+                angle[i] = min(desired_loft_angle, angle[i-1] + loft_omega_max) if desired_loft_angle > angle[i-1] + loft_omega_max else max(desired_loft_angle, angle[i-1] - loft_omega_max)
 
                 if abs(dive_check) >= loft_dive_angle:
                     diving = True
