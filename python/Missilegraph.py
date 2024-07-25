@@ -7,7 +7,7 @@ import os
 import subprocess
 import json
 import sys
-import time
+import time    
 
 def restart():
     python = sys.executable
@@ -20,6 +20,10 @@ def restart():
         print(f"Error restarting the script: {e}")
     finally:
         sys.exit()
+
+def compare():
+    import JSON_compare
+
 
 def clone_github():
     import git_clone
@@ -235,7 +239,7 @@ def update_listbox2(*args):
 
 clone_button = ctk.CTkButton(left_frame, text="Clone https://github.com/\ngszabi99/War-Thunder-Datamine", command=clone_github).pack(side=ctk.TOP, padx=5, pady=5)
 update_button = ctk.CTkButton(left_frame, text="Update From the\nlocal directory", command=update_infos).pack(side=ctk.TOP, padx=5, pady=5)
-
+compare_button = ctk.CTkButton(left_frame, text="Choose from 2 versions", command=compare).pack(side=ctk.TOP, padx=5, pady=5)
 # Create a listbox to display BLK file names
 listbox_frame = ctk.CTkFrame(left_frame)
 listbox_frame.pack(fill=ctk.BOTH, expand=True, padx=5, pady=5)

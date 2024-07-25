@@ -1,0 +1,3 @@
+Some version changes before the changelogs include: ability to add customized files in the rocketgun folder, improvements to the loft simulation
+
+#1 : added the ability to compare between 2 game versions

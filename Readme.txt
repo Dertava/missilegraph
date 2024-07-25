@@ -6,7 +6,7 @@ Range in straight line
 Comparing between 2 missiles
 
 Things that sort of work: 
-Loft isn't 100% right, it can somewhat work for some missiles but don't expect to be accurate with lofting missiles
+Loft is pretty much accurate now but the values still may be flawed.
 
 Things that don't work: 
 Turn performance is merely a suggestion of what the missile could do compared to other things; don't trust it and always prefer to test in game
