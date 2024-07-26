@@ -27,7 +27,7 @@ def compare():
 
 def clone_github():
     import git_clone
-    print(f"Updated from https://github.com/gszabi99/War-Thunder-Datamine\nRestarting...")
+    print(f"Updated from https://github.com/gszabi99/War-Thunder-Datamine")
     restart()
 
 def update_infos():

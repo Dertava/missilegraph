@@ -146,12 +146,9 @@ def compute_dependent_variables(args, start_speed, launch_altitude, target_speed
     angle[0] = 0
     tas_speed[0] = start_speed / 3.6
     aoa = np.radians(args.get("aoa"))
-    # print(f'aoa = {aoa}')
     tvc = np.radians(args.get("tvc"))
-    # print(f'tvc = {tvc}')
     max_load = args.get("overload")
     D = args.get("dist_cm_stab")
-    # print(f'd = {D}')
 
     # Get loft angles if there are any
     loft_climb_angle = args.get("loft_elevation")
@@ -185,7 +182,7 @@ def compute_dependent_variables(args, start_speed, launch_altitude, target_speed
         timefire1_steps = int(np.ceil((args["time_fire_sustainer"] + time_interval) / time_interval))
         mass_decrease_rate2 = (args["mass_end_booster"] - args["mass_end_sustainer"]) / (timefire1_steps - 1)
         for i in range(timefire_steps, min(timefire_steps + timefire1_steps, n)):
-            true_mass[i] = max(args["mass_end_booster"] - (i - timefire_steps) * mass_decrease_rate2, args["mass_end_booster"])
+            true_mass[i] = args["mass_end_booster"] - (i - timefire_steps) * mass_decrease_rate2
             true_thrust[i] = args["force_sustainer"]
     else:
         timefire1_steps = 0
@@ -197,9 +194,7 @@ def compute_dependent_variables(args, start_speed, launch_altitude, target_speed
 
     # Compute dynamics
     for i in range(1, n):
-        # pressure = pressure_at_altitude(args["pressure0"], args["temperature0"], vertical_distances[i-1])  # Pressure at the current altitude
         rho = get_rho(vertical_distances[i-1])
-        # rho = pressure / (R * (args["temperature0"] + 273.15))  # Air density
         area = np.pi * (args["caliber"] / 2) ** 2  # Cross section area
 
         thrust_ias = tas_to_ias(true_thrust[i], vertical_distances[i-1])
