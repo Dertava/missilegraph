@@ -1,3 +1,4 @@
+Install Git if not already installed (https://git-scm.com/downloads)
 Just download the .exe
 First time opening may take a while, it will download the initial data
 
